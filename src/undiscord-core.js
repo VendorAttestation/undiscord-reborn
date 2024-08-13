@@ -31,6 +31,7 @@ class UndiscordCore {
     hasFile: null, // Filter messages that contains file
     hasNoFile: null, // Filter messages that contains no file (opposite of hasFile)
     includeNsfw: null, // Search in NSFW channels
+    includeServers: null, // Search in server channels
     includePinned: null, // Delete messages that are pinned
     pattern: null, // Only delete messages that match the regex (insensitive)
     searchDelay: null, // Delay each time we fetch for more messages
@@ -99,8 +100,12 @@ class UndiscordCore {
         ...job, // override with options for that job
       };
 
-      await this.run(true);
-      if (!this.state.running) break;
+      if (this.options.guildId !== '@me' && !this.options.includeServers) {
+        log.verb(`Skipping the channel ${this.options.channelId} as it's a server channel.`);
+      } else {
+        await this.run(true);
+        if (!this.state.running) break;
+      }
 
       log.info('Job ended.', `(${i + 1}/${queue.length})`);
       this.resetState();
@@ -319,9 +324,10 @@ class UndiscordCore {
         return await this.search();
       }
       else {
-        this.state.running = false;
         log.error(`Error searching messages, API responded with status ${resp.status}!\n`, await resp.json());
-        throw resp;
+        const data = {messages: []};
+        this.state._seachResponse = data;
+        return data;
       }
     }
     const data = await resp.json();
