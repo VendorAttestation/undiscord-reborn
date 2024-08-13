@@ -22,6 +22,8 @@ class UndiscordCore {
     authorId: null, // Author of the messages you want to delete
     guildId: null, // Server were the messages are located
     channelId: null, // Channel were the messages are located
+    threadId: null, // Thread/forum where the messages are located
+    isThread: false, // Delete only messages in thread
     minId: null, // Only delete messages after this, leave blank do delete all
     maxId: null, // Only delete messages before this, leave blank do delete all
     content: null, // Filter messages that contains this text content
@@ -328,6 +330,12 @@ class UndiscordCore {
       log.verb("IncludeApplications filter is false. Skipping bots and applications...");
       messagesToDelete = messagesToDelete.filter(msg => !msg.author.bot);
     }
+
+    // only delete messages in the thread
+    if (this.options.isThread) {
+      messagesToDelete = messagesToDelete.filter(msg => msg.channel_id === this.options.threadId);
+    }
+	  
     // custom filter of messages
     try {
       const regex = new RegExp(this.options.pattern, 'i');
