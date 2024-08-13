@@ -21,8 +21,8 @@ import { replaceInterpolations, msToHMS } from './utils/helpers';
 // -------------------------- User interface ------------------------------- //
 
 // links
-const HOME = 'https://github.com/victornpb/undiscord';
-const WIKI = 'https://github.com/victornpb/undiscord/wiki';
+const HOME = 'https://github.com/VendorAttestation/undiscord-reborn';
+const WIKI = 'https://github.com/VendorAttestation/undiscord-reborn/wiki';
 
 const undiscordCore = new UndiscordCore();
 messagePicker.init();
