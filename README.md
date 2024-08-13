@@ -8,7 +8,6 @@
    * Opera: [Tampermonkey][opera_tampermonkey] or [Violentmonkey][opera_violentmonkey]
    * Brave: [Violentmonkey][chrome_violentmonkey] or [Tampermonkey][chrome_tampermonkey]
    * Edge: [Tampermonkey][edge_tampermonkey]  
-   * Safari: ~[Tampermonkey][safari_tampermonkey]~ 
     
 1. Install Undiscord:  
   [![][greasyfork_icon]][greasyfork_url]
