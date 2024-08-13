@@ -274,6 +274,7 @@ async function startAction() {
   const hasNoFile = $('input#hasNoFile').checked;
   const includePinned = $('input#includePinned').checked;
   const pattern = $('input#pattern').value;
+  const includeApplications = $('input#includeApplications').value;
   // message interval
   const minId = $('input#minId').value.trim();
   const maxId = $('input#maxId').value.trim();
