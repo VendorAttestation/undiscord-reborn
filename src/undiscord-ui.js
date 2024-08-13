@@ -38,7 +38,6 @@ const ui = {
   logArea: null,
   autoScroll: null,
   trimLog: null,
-  rateLimitPrevention: null,
   // progress handler
   progressMain: null,
   progressIcon: null,
@@ -111,7 +110,6 @@ function initUI() {
   ui.progressMain = $('#progressBar');
   ui.progressIcon = ui.undiscordBtn.querySelector('progress');
   ui.percent = $('#progressPercent');
-  ui.rateLimitPrevention = $('#rateLimitPrevention');
 
   // register event listeners
   $('#hide').onclick = toggleWindow;
@@ -156,7 +154,7 @@ function initUI() {
   $('input#hasNoFile').onclick = function() {
     validateHasFileFilter(this);
   }
-  // sync delays
+  // sync advanced settings
   $('input#searchDelay').onchange = (e) => {
     const v = parseInt(e.target.value);
     if (v) undiscordCore.options.searchDelay = v;
@@ -165,7 +163,9 @@ function initUI() {
     const v = parseInt(e.target.value);
     if (v) undiscordCore.options.deleteDelay = v;
   };
-
+  $('input#rateLimitPrevention').onchange = (e) => {
+    undiscordCore.options.rateLimitPrevention = e.target.checked ?? false;
+  };
   $('input#searchDelay').addEventListener('input', (event) => {
     $('div#searchDelayValue').textContent = event.target.value + 'ms';
   });
@@ -308,7 +308,7 @@ async function startAction() {
   //advanced
   const searchDelay = parseInt($('input#searchDelay').value.trim());
   const deleteDelay = parseInt($('input#deleteDelay').value.trim());
- 
+  const rateLimitPrevention = $('input#rateLimitPrevention').checked;
   // token
   const authToken = $('input#token').value.trim() || fillToken();
   if (!authToken) return; // get token already logs an error.
@@ -341,6 +341,7 @@ async function startAction() {
     pattern,
     searchDelay,
     deleteDelay,
+    rateLimitPrevention,
     // maxAttempt: 2,
   };
 
