@@ -36,6 +36,7 @@ export async function getChannelId() {
       return [m[2],false,null];
     }
   }
+}
 
 export function fillToken() {
   try {

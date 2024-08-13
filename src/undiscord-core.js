@@ -189,7 +189,7 @@ class UndiscordCore {
         log.verb(`Skipped ${this.state._skippedMessages.length} out of ${this.state._seachResponse.messages.length} in this page.`, `(Offset for ${this.state.sortOrder} was ${oldOffset}, ajusted to ${this.state.offset[this.state.sortOrder]})`);
       }
       else if (this.state.delCount < messagesRemaining) {
-	 log.verb('There\'s messages remaining, checking next page...');
+        log.verb('There\'s messages remaining, checking next page...');
       }
       else {
         log.verb('Ended because API returned an empty page.');
@@ -247,7 +247,7 @@ class UndiscordCore {
     }
   }
 
-async fetchChannelInfo() {
+  async fetchChannelInfo() {
     let API_CHANNEL_URL = `https://discord.com/api/v9/channels/${this.options.channelId}`;
 
     let resp;
@@ -345,28 +345,28 @@ async fetchChannelInfo() {
       return await this.search();
     }
     if (resp.status === 400 ) {
-	const data = await resp.json();
-	if (data.code === 50024) {
-	  // 400 can happen if the channel is not found (code=50024)
-	  log.error('Error searching messages, channel not found!');
-	  // return fake empty messages data to skip the next channel
-	  const data = { total_results: 0, messages: [] };
-	  this.state._seachResponse = data;
-	  return data;
-	
-	}
-	
+      const data = await resp.json();
+      if (data.code === 50024) {
+      // 400 can happen if the channel is not found (code=50024)
+        log.error('Error searching messages, channel not found!');
+        // return fake empty messages data to skip the next channel
+        const data = { total_results: 0, messages: [] };
+        this.state._seachResponse = data;
+        return data;
+    
+      }
+    
     }
     if (resp.status === 403) {
-	const data = await resp.json();
-	if (data.code === 50001) {
-	  // 403 can happen if the bot is not in the guild (code=50001)
-	  log.error('Error searching messages, user is not in the guild!');
-	  // return fake empty messages data to skip the next channel
-	  const data = { total_results: 0, messages: [] };
-	  this.state._seachResponse = data;
-	  return data;
-	}
+      const data = await resp.json();
+      if (data.code === 50001) {
+      // 403 can happen if the bot is not in the guild (code=50001)
+        log.error('Error searching messages, user is not in the guild!');
+        // return fake empty messages data to skip the next channel
+        const data = { total_results: 0, messages: [] };
+        this.state._seachResponse = data;
+        return data;
+      }
     }
     if (!resp.ok) {
       // searching messages too fast
@@ -411,14 +411,14 @@ async fetchChannelInfo() {
     messagesToDelete = messagesToDelete.filter(msg => msg.type === 0 || (msg.type >= 6 && msg.type <= 21));
     messagesToDelete = messagesToDelete.filter(msg => msg.pinned ? this.options.includePinned : true);
     // if the user picked hasNoFile, we need to filter out messages with attachments
-		// this has to be done after the search because the search API doesn't have a filter for this
-		if (this.options.hasNoFile) {
-			messagesToDelete = messagesToDelete.filter(msg => !msg.attachments.length);
-		}
-	  
+    // this has to be done after the search because the search API doesn't have a filter for this
+    if (this.options.hasNoFile) {
+      messagesToDelete = messagesToDelete.filter(msg => !msg.attachments.length);
+    }
+      
     // if the user hasn't checked the include applications option, filter out all bots
     if (this.options.includeApplications == false) {
-      log.verb("IncludeApplications filter is false. Skipping bots and applications...");
+      log.verb('IncludeApplications filter is false. Skipping bots and applications...');
       messagesToDelete = messagesToDelete.filter(msg => !msg.author.bot);
     }
 
@@ -426,7 +426,7 @@ async fetchChannelInfo() {
     if (this.options.isThread) {
       messagesToDelete = messagesToDelete.filter(msg => msg.channel_id === this.options.threadId);
     }
-	  
+      
     // custom filter of messages
     try {
       const regex = new RegExp(this.options.pattern, 'i');
@@ -522,7 +522,7 @@ async fetchChannelInfo() {
             // in this case we need to "skip" this message from the next search
             // otherwise it will come up again in the next page (and fail to delete again)
             log.warn('Error deleting message (Thread is archived). Will increment offset so we don\'t search this in the next page...');
-	    this.state.offset[this.state.sortOrder]++;
+            this.state.offset[this.state.sortOrder]++;
             this.state.failCount++;
             return 'FAIL_SKIP'; // Failed but we will skip it next time
           }
@@ -558,6 +558,7 @@ async fetchChannelInfo() {
         }
       }
     }
+  }
   afterRequest() {
     this.stats.lastPing = (Date.now() - this.#beforeTs);
     this.stats.avgPing = this.stats.avgPing > 0 ? (this.stats.avgPing * 0.9) + (this.stats.lastPing * 0.1) : this.stats.lastPing;

@@ -150,10 +150,10 @@ function initUI() {
   $('button#getToken').onclick = () => $('input#token').value = fillToken();
   $('input#hasFile').onclick = function() {
     validateHasFileFilter(this);
-  }
+  };
   $('input#hasNoFile').onclick = function() {
     validateHasFileFilter(this);
-  }
+  };
   // sync advanced settings
   $('input#searchDelay').onchange = (e) => {
     const v = parseInt(e.target.value);
@@ -290,7 +290,7 @@ async function startAction() {
   const threadId = state.threadId;
   const includeNsfw = $('input#includeNsfw').checked;
   // wipe archive
-  const includeServers = $('input#includeServers').checked
+  const includeServers = $('input#includeServers').checked;
   // filter
   const content = $('input#search').value.trim();
   const hasLink = $('input#hasLink').checked;
