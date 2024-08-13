@@ -322,9 +322,7 @@ class UndiscordCore {
 	  
     // if the user provided an author.Id, skip all messages that aren't created by the author.Id.
     if (this.options.includeApplications == false) {
-      log.verb("IncludeApplications filter is false. Skipping bots and applications...")
-    }
-    if (this.options.includeApplications == false) {
+      log.verb("IncludeApplications filter is false. Skipping bots and applications...");
       messagesToDelete = messagesToDelete.filter(msg => !msg.author.bot);
     }
     // custom filter of messages
