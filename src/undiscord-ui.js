@@ -277,6 +277,8 @@ async function startAction() {
   const isThread = state.isThread;
   const threadId = state.threadId;
   const includeNsfw = $('input#includeNsfw').checked;
+  // wipe archive
+  const includeServers = $('input#includeServers').checked
   // filter
   const content = $('input#search').value.trim();
   const hasLink = $('input#hasLink').checked;
@@ -322,6 +324,7 @@ async function startAction() {
     hasNoFile,
     includeApplications,
     includeNsfw,
+    includeServers,
     includePinned,
     pattern,
     searchDelay,
