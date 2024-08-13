@@ -37,6 +37,7 @@ class UndiscordCore {
     searchDelay: null, // Delay each time we fetch for more messages
     includeApplications: null, //Include application/bot messages
     deleteDelay: null, // Delay between each delete operation
+    rateLimitPrevention: null, // Whether rate limit prevention is enabled or not
     maxAttempt: 2, // Attempts to delete a single message if it fails
     askForConfirmation: true,
   };
@@ -545,7 +546,7 @@ async fetchChannelInfo() {
   async beforeRequest() {
     this.#requestLog.push(Date.now());
     this.#requestLog = this.#requestLog.filter(timestamp => (Date.now() - timestamp) < 60 * 1000);
-    if (ui.rateLimitPrevention.checked) {
+    if (this.options.rateLimitPrevention) {
       let rateLimits = [[45, 60], [4, 5]]; // todo: confirm, testing shows these are right
       for (let [maxRequests, timePeriod] of rateLimits) {
         if (this.#requestLog.length >= maxRequests && (Date.now() - this.#requestLog[this.#requestLog.length - maxRequests]) < timePeriod * 1000) {
