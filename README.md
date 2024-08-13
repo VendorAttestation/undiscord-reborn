@@ -76,4 +76,4 @@ Please read: [what I'm doing to ensure this is safe for users][security_policy].
   [opera_violentmonkey]: https://addons.opera.com/extensions/details/violent-monkey/
 
 <!-- Download links -->
-  [greasyfork_url]: <> "Get Undiscord from GreasyFork"
+  [greasyfork_url]: <https://greasyfork.org/en/scripts/487075-undiscord> "Get Undiscord from GreasyFork"
