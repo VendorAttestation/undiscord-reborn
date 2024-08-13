@@ -313,13 +313,15 @@ class UndiscordCore {
     let messagesToDelete = discoveredMessages;
     messagesToDelete = messagesToDelete.filter(msg => msg.type === 0 || (msg.type >= 6 && msg.type <= 21));
     messagesToDelete = messagesToDelete.filter(msg => msg.pinned ? this.options.includePinned : true);
-
     // if the user picked hasNoFile, we need to filter out messages with attachments
 		// this has to be done after the search because the search API doesn't have a filter for this
 		if (this.options.hasNoFile) {
 			messagesToDelete = messagesToDelete.filter(msg => !msg.attachments.length);
 		}
-    
+	  
+    // if the user provided an author.Id, skip all messages that aren't created by the author.Id.
+    // fixes issues with bots & applications hanging the deletion.
+    if (this.options.authorId) messagesToDelete = messagesToDelete.filter(msg => msg.author.id === this.options.authorId);
     // custom filter of messages
     try {
       const regex = new RegExp(this.options.pattern, 'i');
